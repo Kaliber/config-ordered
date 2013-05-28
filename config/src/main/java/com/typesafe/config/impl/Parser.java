@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -593,7 +593,7 @@ final class Parser {
 
         private AbstractConfigObject parseObject(boolean hadOpenCurly) {
             // invoked just after the OPEN_CURLY (or START, if !hadOpenCurly)
-            Map<String, AbstractConfigValue> values = new HashMap<String, AbstractConfigValue>();
+            Map<String, AbstractConfigValue> values = new LinkedHashMap<String, AbstractConfigValue>();
             ConfigOrigin objectOrigin = lineOrigin();
             boolean afterComma = false;
             Path lastPath = null;

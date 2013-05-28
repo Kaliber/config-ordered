@@ -1,3 +1,9 @@
+# Rhinofly changes
+
+ - Change some HashMaps to LinkedHashMaps, so the order of elements in an object is retained
+
+## Original documentation
+
 Configuration library for JVM languages.
 
 ## Overview

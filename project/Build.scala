@@ -1,6 +1,6 @@
 import sbt._
 import Keys._
-import com.typesafe.sbtosgi.OsgiPlugin._
+// import com.typesafe.sbtosgi.OsgiPlugin._
 
 object ConfigBuild extends Build {
     val unpublished = Seq(
@@ -32,13 +32,15 @@ object ConfigBuild extends Build {
                                  base = file("config"),
                                  settings =
                                    Project.defaultSettings ++
-                                   sonatype.settings ++
-                                   osgiSettings ++
+                                   // sonatype.settings ++
+                                   // osgiSettings ++
                                    Seq(
-                                     OsgiKeys.exportPackage := Seq("com.typesafe.config"),
-                                     packagedArtifact in (Compile, packageBin) <<= (artifact in (Compile, packageBin), OsgiKeys.bundle).identityMap,
-                                     artifact in (Compile, packageBin) ~= { _.copy(`type` = "bundle") }
-                                   )) dependsOn(testLib % "test->test")
+                                     name := "config-ordered",
+                                     publishTo := Some("Rhinofly external releases" at "http://maven-repository.rhinofly.net:8081/artifactory/ext-release-local")
+                                     // OsgiKeys.exportPackage := Seq("com.typesafe.config"),
+                                     // packagedArtifact in (Compile, packageBin) <<= (artifact in (Compile, packageBin), OsgiKeys.bundle).identityMap,
+                                     // artifact in (Compile, packageBin) ~= { _.copy(`type` = "bundle") }
+                                   )) // dependsOn(testLib % "test->test")
 
     lazy val testLib = Project(id = "test-lib",
                                base = file("test-lib"),
@@ -99,10 +101,10 @@ abstract class PublishToSonatype(build: Build) {
   }
 
   def settings: Seq[Setting[_]] = Seq(
-    publishMavenStyle := true,
-    publishTo <<= (isSnapshot) { (snapshot) => Some(if (snapshot) ossSnapshots else ossStaging) },
-    publishArtifact in Test := false,
-    pomIncludeRepository := (_ => false),
-    pomExtra <<= (scalaVersion)(generatePomExtra)
+    // publishMavenStyle := true,
+    // publishTo <<= (isSnapshot) { (snapshot) => Some(if (snapshot) ossSnapshots else ossStaging) },
+    publishArtifact in Test := false
+    // pomIncludeRepository := (_ => false),
+    // pomExtra <<= (scalaVersion)(generatePomExtra)
   )
 }

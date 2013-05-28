@@ -9,9 +9,9 @@
 // Versions and git tags should follow: http://semver.org/
 // except using -SNAPSHOT instead of without hyphen.
 
-version in GlobalScope := "1.0.0"
+version in GlobalScope := "1.0.1"
 
-organization in GlobalScope := "com.typesafe"
+organization in GlobalScope := "nl.rhinofly.thirdparty"
 
 scalacOptions in GlobalScope in Compile := Seq("-unchecked", "-deprecation")
 
