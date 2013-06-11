@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -225,8 +226,8 @@ final class SimpleConfigObject extends AbstractConfigObject implements Serializa
 
         boolean changed = false;
         boolean allResolved = true;
-        Map<String, AbstractConfigValue> merged = new HashMap<String, AbstractConfigValue>();
-        Set<String> allKeys = new HashSet<String>();
+        Map<String, AbstractConfigValue> merged = new LinkedHashMap<String, AbstractConfigValue>();
+        Set<String> allKeys = new LinkedHashSet<String>();
         allKeys.addAll(this.keySet());
         allKeys.addAll(fallback.keySet());
         for (String key : allKeys) {
