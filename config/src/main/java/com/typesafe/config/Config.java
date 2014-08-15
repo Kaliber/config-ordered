@@ -6,6 +6,8 @@ package com.typesafe.config;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * An immutable map from config paths to config values.
@@ -448,6 +450,10 @@ public interface Config extends ConfigMergeable {
      *             if value cannot be parsed as a number of nanoseconds
      */
     Long getNanoseconds(String path);
+    
+    long getDuration(String path, TimeUnit unit);
+
+    List<Long> getDurationList(String path, TimeUnit unit);
 
     /**
      * Gets a list value (with any element type) as a {@link ConfigList}, which

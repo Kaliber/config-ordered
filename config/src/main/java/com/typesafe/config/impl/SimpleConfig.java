@@ -253,6 +253,40 @@ final class SimpleConfig implements Config, MergeableValue, Serializable {
         return ns;
     }
 
+    @Override
+    public long getDuration(String path, TimeUnit unit) {
+        ConfigValue v = find(path, ConfigValueType.STRING);
+        long result = unit.convert(
+                       parseDuration((String) v.unwrapped(), v.origin(), path),
+                       TimeUnit.NANOSECONDS);
+        return result;
+    }
+
+    @Override
+    public List<Long> getDurationList(String path, TimeUnit unit) {
+        List<Long> l = new ArrayList<Long>();
+        List<? extends ConfigValue> list = getList(path);
+        for (ConfigValue v : list) {
+            if (v.valueType() == ConfigValueType.NUMBER) {
+                Long n = unit.convert(
+                           ((Number) v.unwrapped()).longValue(),
+                           TimeUnit.MILLISECONDS);
+                l.add(n);
+            } else if (v.valueType() == ConfigValueType.STRING) {
+                String s = (String) v.unwrapped();
+                Long n = unit.convert(
+                           parseDuration(s, v.origin(), path),
+                           TimeUnit.NANOSECONDS);
+                l.add(n);
+            } else {
+                throw new ConfigException.WrongType(v.origin(), path,
+                        "duration string or number of milliseconds",
+                        v.valueType().name());
+            }
+        }
+        return l;
+    }
+    
     @SuppressWarnings("unchecked")
     private <T> List<T> getHomogeneousUnwrappedList(String path,
             ConfigValueType expected) {
